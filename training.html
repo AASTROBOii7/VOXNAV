@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOXNAV | Voice Calibration</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="training-container">
+    <div style="position: absolute; top: 20px; left: 20px;">
+        <button onclick="window.location.href='index.html'"
+            style="background: none; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">
+            &times; Cancel
+        </button>
+    </div>
+
+    <h2 class="fade-in-up">Voice Calibration</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Please read the text below clearly.</p>
+
+    <div class="visualizer-circle active" id="visualizer">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M12 2C10.3431 2 9 3.34315 9 5V11C9 12.6569 10.3431 14 12 14C13.6569 14 15 12.6569 15 11V5C15 3.34315 13.6569 2 12 2Z"
+                stroke="#00F3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M19 11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11" stroke="#00F3FF" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 18V22" stroke="#00F3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+
+    <div class="status-text accent-text" id="prompt-text">"Hey VOX, start system."</div>
+
+    <div class="progress-dots">
+        <div class="dot active" id="dot-1"></div>
+        <div class="dot" id="dot-2"></div>
+        <div class="dot" id="dot-3"></div>
+    </div>
+
+    <script>
+        const prompts = [
+            "Hey VOX, start system.",
+            "Enable gameplay mode.",
+            "Open browser and search for news."
+        ];
+
+        let currentStep = 0;
+        let isPaused = false;
+
+        function nextStep() {
+            if (isPaused) return;
+
+            if (currentStep >= prompts.length - 1) {
+                // Finish
+                document.getElementById('prompt-text').innerText = "Calibration Complete";
+                document.getElementById('visualizer').classList.remove('active');
+
+                // Mark Trained
+                localStorage.setItem('voxnav_voice_trained', 'true');
+                localStorage.setItem('voxnav_active', 'true'); // Auto-enable first time
+
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                return;
+            }
+
+            // Transition
+            currentStep++;
+            document.getElementById('prompt-text').style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('prompt-text').innerText = prompts[currentStep];
+                document.getElementById('prompt-text').style.opacity = '1';
+
+                // Update dots
+                document.querySelectorAll('.dot').forEach((dot, index) => {
+                    if (index <= currentStep) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                });
+            }, 500);
+        }
+
+        window.onload = function () {
+            setTimeout(() => {
+                const interval = setInterval(() => {
+                    if (currentStep >= prompts.length || isPaused) {
+                        clearInterval(interval);
+                    } else {
+                        nextStep();
+                    }
+                }, 3000);
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
