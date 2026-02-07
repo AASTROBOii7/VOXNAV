@@ -1,0 +1,35 @@
+# VoxNav - Voice-Activated Assistant
+# Core Dependencies
+
+# ASR (Automatic Speech Recognition)
+transformers>=4.25.0
+torch>=1.7
+torchaudio
+librosa
+soundfile
+
+# Gemini API
+google-generativeai>=0.3.0
+
+# Indic NLP (for text normalization)
+git+https://github.com/anoopkunchukuttan/indic_nlp_library.git
+
+# Web Parsing (for dynamic prompts)
+beautifulsoup4>=4.12.0
+
+# Evaluation metrics
+jiwer
+evaluate>=0.3
+
+# Utilities
+tqdm
+joblib
+regex
+
+# Optional: GPU acceleration for batch processing
+# deepspeed
+# accelerate
+
+# Optional: Audio recording
+# pyaudio
+# webrtcvad==2.0.10
