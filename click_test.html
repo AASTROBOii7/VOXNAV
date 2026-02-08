@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Test Page</title>
+</head>
+<body>
+    <h1>Click Test</h1>
+    
+    <!-- Case 1: Simple button -->
+    <button id="btn1" onclick="console.log('Clicked Simple Button')">Simple Button</button>
+    
+    <!-- Case 2: Case sensitivity -->
+    <button id="btn2" onclick="console.log('Clicked CASE Button')">CASE SENSITIVE</button>
+    
+    <!-- Case 3: Nested text -->
+    <button id="btn3" onclick="console.log('Clicked Nested Button')">
+        <span>Nested</span> <b>Text</b> Button
+    </button>
+    
+    <!-- Case 4: Attribute based (aria-label) -->
+    <button id="btn4" aria-label="Aria Label Button" onclick="console.log('Clicked Aria Button')">
+        <i class="icon"></i> (Icon Only)
+    </button>
+    
+    <!-- Case 5: Input submit -->
+    <input type="submit" value="Submit Input" onclick="console.log('Clicked Submit Input')">
+    
+    <!-- Case 6: Link pretending to be button -->
+    <a href="#" role="button" onclick="console.log('Clicked Link Button'); return false;">Link Button</a>
+    
+    <!-- Case 7: Partial match -->
+    <button id="btn7" onclick="console.log('Clicked Partial Button')">Click Me Please</button>
+
+</body>
+</html>
